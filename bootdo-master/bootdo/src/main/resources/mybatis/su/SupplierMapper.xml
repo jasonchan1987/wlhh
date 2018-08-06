@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.su.dao.SupplierDao">
+
+	<select id="get" resultType="com.bootdo.su.domain.SupplierDO">
+		select `srid`,`orgno`,`name`,`desc`,`phone`,`addr`,`samplename`,`dipropertyid`,`email`,`fax`,`homepage`,`majorbusiness`,`peoplenum`,`employ`,`oldname`,`post`,`taxnum`,`capital`,`bankname`,`bankdept`,`accountno`,`mcs`,`establishdate`,`state`,`blid`,`dievgradeid`,`create_by`,`create_deptid`,`create_date`,`update_by`,`update_deptid`,`update_date`,`remarks`,`del_flag` from su_supplier where srid = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.su.domain.SupplierDO">
+		select `srid`,`orgno`,`name`,`desc`,`phone`,`addr`,`samplename`,`dipropertyid`,`email`,`fax`,`homepage`,`majorbusiness`,`peoplenum`,`employ`,`oldname`,`post`,`taxnum`,`capital`,`bankname`,`bankdept`,`accountno`,`mcs`,`establishdate`,`state`,`blid`,`dievgradeid`,`create_by`,`create_deptid`,`create_date`,`update_by`,`update_deptid`,`update_date`,`remarks`,`del_flag` from su_supplier
+        <where>  
+		  		  <if test="srid != null and srid != ''"> and srid = #{srid} </if>
+		  		  <if test="orgno != null and orgno != ''"> and orgno = #{orgno} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="desc != null and desc != ''"> and desc = #{desc} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		  <if test="addr != null and addr != ''"> and addr = #{addr} </if>
+		  		  <if test="samplename != null and samplename != ''"> and samplename = #{samplename} </if>
+		  		  <if test="dipropertyid != null and dipropertyid != ''"> and dipropertyid = #{dipropertyid} </if>
+		  		  <if test="email != null and email != ''"> and email = #{email} </if>
+		  		  <if test="fax != null and fax != ''"> and fax = #{fax} </if>
+		  		  <if test="homepage != null and homepage != ''"> and homepage = #{homepage} </if>
+		  		  <if test="majorbusiness != null and majorbusiness != ''"> and majorbusiness = #{majorbusiness} </if>
+		  		  <if test="peoplenum != null and peoplenum != ''"> and peoplenum = #{peoplenum} </if>
+		  		  <if test="employ != null and employ != ''"> and employ = #{employ} </if>
+		  		  <if test="oldname != null and oldname != ''"> and oldname = #{oldname} </if>
+		  		  <if test="post != null and post != ''"> and post = #{post} </if>
+		  		  <if test="taxnum != null and taxnum != ''"> and taxnum = #{taxnum} </if>
+		  		  <if test="capital != null and capital != ''"> and capital = #{capital} </if>
+		  		  <if test="bankname != null and bankname != ''"> and bankname = #{bankname} </if>
+		  		  <if test="bankdept != null and bankdept != ''"> and bankdept = #{bankdept} </if>
+		  		  <if test="accountno != null and accountno != ''"> and accountno = #{accountno} </if>
+		  		  <if test="mcs != null and mcs != ''"> and mcs = #{mcs} </if>
+		  		  <if test="establishdate != null and establishdate != ''"> and establishdate = #{establishdate} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		  <if test="blid != null and blid != ''"> and blid = #{blid} </if>
+		  		  <if test="dievgradeid != null and dievgradeid != ''"> and dievgradeid = #{dievgradeid} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="createDeptid != null and createDeptid != ''"> and create_deptid = #{createDeptid} </if>
+		  		  <if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		  <if test="updateDeptid != null and updateDeptid != ''"> and update_deptid = #{updateDeptid} </if>
+		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by srid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from su_supplier
+		 <where>  
+		  		  <if test="srid != null and srid != ''"> and srid = #{srid} </if>
+		  		  <if test="orgno != null and orgno != ''"> and orgno = #{orgno} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="desc != null and desc != ''"> and desc = #{desc} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		  <if test="addr != null and addr != ''"> and addr = #{addr} </if>
+		  		  <if test="samplename != null and samplename != ''"> and samplename = #{samplename} </if>
+		  		  <if test="dipropertyid != null and dipropertyid != ''"> and dipropertyid = #{dipropertyid} </if>
+		  		  <if test="email != null and email != ''"> and email = #{email} </if>
+		  		  <if test="fax != null and fax != ''"> and fax = #{fax} </if>
+		  		  <if test="homepage != null and homepage != ''"> and homepage = #{homepage} </if>
+		  		  <if test="majorbusiness != null and majorbusiness != ''"> and majorbusiness = #{majorbusiness} </if>
+		  		  <if test="peoplenum != null and peoplenum != ''"> and peoplenum = #{peoplenum} </if>
+		  		  <if test="employ != null and employ != ''"> and employ = #{employ} </if>
+		  		  <if test="oldname != null and oldname != ''"> and oldname = #{oldname} </if>
+		  		  <if test="post != null and post != ''"> and post = #{post} </if>
+		  		  <if test="taxnum != null and taxnum != ''"> and taxnum = #{taxnum} </if>
+		  		  <if test="capital != null and capital != ''"> and capital = #{capital} </if>
+		  		  <if test="bankname != null and bankname != ''"> and bankname = #{bankname} </if>
+		  		  <if test="bankdept != null and bankdept != ''"> and bankdept = #{bankdept} </if>
+		  		  <if test="accountno != null and accountno != ''"> and accountno = #{accountno} </if>
+		  		  <if test="mcs != null and mcs != ''"> and mcs = #{mcs} </if>
+		  		  <if test="establishdate != null and establishdate != ''"> and establishdate = #{establishdate} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		  <if test="blid != null and blid != ''"> and blid = #{blid} </if>
+		  		  <if test="dievgradeid != null and dievgradeid != ''"> and dievgradeid = #{dievgradeid} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="createDeptid != null and createDeptid != ''"> and create_deptid = #{createDeptid} </if>
+		  		  <if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		  <if test="updateDeptid != null and updateDeptid != ''"> and update_deptid = #{updateDeptid} </if>
+		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.su.domain.SupplierDO" useGeneratedKeys="true" keyProperty="srid">
+		insert into su_supplier
+		(
+			`orgno`, 
+			`name`, 
+			`desc`, 
+			`phone`, 
+			`addr`, 
+			`samplename`, 
+			`dipropertyid`, 
+			`email`, 
+			`fax`, 
+			`homepage`, 
+			`majorbusiness`, 
+			`peoplenum`, 
+			`employ`, 
+			`oldname`, 
+			`post`, 
+			`taxnum`, 
+			`capital`, 
+			`bankname`, 
+			`bankdept`, 
+			`accountno`, 
+			`mcs`, 
+			`establishdate`, 
+			`state`, 
+			`blid`, 
+			`dievgradeid`, 
+			`create_by`, 
+			`create_deptid`, 
+			`create_date`, 
+			`update_by`, 
+			`update_deptid`, 
+			`update_date`, 
+			`remarks`, 
+			`del_flag`
+		)
+		values
+		(
+			#{orgno}, 
+			#{name}, 
+			#{desc}, 
+			#{phone}, 
+			#{addr}, 
+			#{samplename}, 
+			#{dipropertyid}, 
+			#{email}, 
+			#{fax}, 
+			#{homepage}, 
+			#{majorbusiness}, 
+			#{peoplenum}, 
+			#{employ}, 
+			#{oldname}, 
+			#{post}, 
+			#{taxnum}, 
+			#{capital}, 
+			#{bankname}, 
+			#{bankdept}, 
+			#{accountno}, 
+			#{mcs}, 
+			#{establishdate}, 
+			#{state}, 
+			#{blid}, 
+			#{dievgradeid}, 
+			#{createBy}, 
+			#{createDeptid}, 
+			#{createDate}, 
+			#{updateBy}, 
+			#{updateDeptid}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{delFlag}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.su.domain.SupplierDO">
+		update su_supplier 
+		<set>
+			<if test="orgno != null">`orgno` = #{orgno}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="desc != null">`desc` = #{desc}, </if>
+			<if test="phone != null">`phone` = #{phone}, </if>
+			<if test="addr != null">`addr` = #{addr}, </if>
+			<if test="samplename != null">`samplename` = #{samplename}, </if>
+			<if test="dipropertyid != null">`dipropertyid` = #{dipropertyid}, </if>
+			<if test="email != null">`email` = #{email}, </if>
+			<if test="fax != null">`fax` = #{fax}, </if>
+			<if test="homepage != null">`homepage` = #{homepage}, </if>
+			<if test="majorbusiness != null">`majorbusiness` = #{majorbusiness}, </if>
+			<if test="peoplenum != null">`peoplenum` = #{peoplenum}, </if>
+			<if test="employ != null">`employ` = #{employ}, </if>
+			<if test="oldname != null">`oldname` = #{oldname}, </if>
+			<if test="post != null">`post` = #{post}, </if>
+			<if test="taxnum != null">`taxnum` = #{taxnum}, </if>
+			<if test="capital != null">`capital` = #{capital}, </if>
+			<if test="bankname != null">`bankname` = #{bankname}, </if>
+			<if test="bankdept != null">`bankdept` = #{bankdept}, </if>
+			<if test="accountno != null">`accountno` = #{accountno}, </if>
+			<if test="mcs != null">`mcs` = #{mcs}, </if>
+			<if test="establishdate != null">`establishdate` = #{establishdate}, </if>
+			<if test="state != null">`state` = #{state}, </if>
+			<if test="blid != null">`blid` = #{blid}, </if>
+			<if test="dievgradeid != null">`dievgradeid` = #{dievgradeid}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="createDeptid != null">`create_deptid` = #{createDeptid}, </if>
+			<if test="createDate != null">`create_date` = #{createDate}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="updateDeptid != null">`update_deptid` = #{updateDeptid}, </if>
+			<if test="updateDate != null">`update_date` = #{updateDate}, </if>
+			<if test="remarks != null">`remarks` = #{remarks}, </if>
+			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
+		</set>
+		where srid = #{srid}
+	</update>
+	
+	<delete id="remove">
+		delete from su_supplier where srid = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from su_supplier where srid in 
+		<foreach item="srid" collection="array" open="(" separator="," close=")">
+			#{srid}
+		</foreach>
+	</delete>
+
+</mapper>

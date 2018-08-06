@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.su.dao.MaterielDao">
+
+	<select id="get" resultType="com.bootdo.su.domain.MaterielDO">
+		select `maid`,`conid`,`name`,`dimaterieltypeid`,`num`,`mdesc`,`create_by`,`create_deptid`,`create_date`,`update_by`,`update_deptid`,`update_date`,`remarks`,`del_flag` from su_materiel where maid = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.su.domain.MaterielDO">
+		select `maid`,`conid`,`name`,`dimaterieltypeid`,`num`,`mdesc`,`create_by`,`create_deptid`,`create_date`,`update_by`,`update_deptid`,`update_date`,`remarks`,`del_flag` from su_materiel
+        <where>  
+		  		  <if test="maid != null and maid != ''"> and maid = #{maid} </if>
+		  		  <if test="conid != null and conid != ''"> and conid = #{conid} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="dimaterieltypeid != null and dimaterieltypeid != ''"> and dimaterieltypeid = #{dimaterieltypeid} </if>
+		  		  <if test="num != null and num != ''"> and num = #{num} </if>
+		  		  <if test="mdesc != null and mdesc != ''"> and mdesc = #{mdesc} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="createDeptid != null and createDeptid != ''"> and create_deptid = #{createDeptid} </if>
+		  		  <if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		  <if test="updateDeptid != null and updateDeptid != ''"> and update_deptid = #{updateDeptid} </if>
+		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by maid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from su_materiel
+		 <where>  
+		  		  <if test="maid != null and maid != ''"> and maid = #{maid} </if>
+		  		  <if test="conid != null and conid != ''"> and conid = #{conid} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="dimaterieltypeid != null and dimaterieltypeid != ''"> and dimaterieltypeid = #{dimaterieltypeid} </if>
+		  		  <if test="num != null and num != ''"> and num = #{num} </if>
+		  		  <if test="mdesc != null and mdesc != ''"> and mdesc = #{mdesc} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="createDeptid != null and createDeptid != ''"> and create_deptid = #{createDeptid} </if>
+		  		  <if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		  <if test="updateDeptid != null and updateDeptid != ''"> and update_deptid = #{updateDeptid} </if>
+		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.su.domain.MaterielDO" useGeneratedKeys="true" keyProperty="maid">
+		insert into su_materiel
+		(
+			`conid`, 
+			`name`, 
+			`dimaterieltypeid`, 
+			`num`, 
+			`mdesc`, 
+			`create_by`, 
+			`create_deptid`, 
+			`create_date`, 
+			`update_by`, 
+			`update_deptid`, 
+			`update_date`, 
+			`remarks`, 
+			`del_flag`
+		)
+		values
+		(
+			#{conid}, 
+			#{name}, 
+			#{dimaterieltypeid}, 
+			#{num}, 
+			#{mdesc}, 
+			#{createBy}, 
+			#{createDeptid}, 
+			#{createDate}, 
+			#{updateBy}, 
+			#{updateDeptid}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{delFlag}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.su.domain.MaterielDO">
+		update su_materiel 
+		<set>
+			<if test="conid != null">`conid` = #{conid}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="dimaterieltypeid != null">`dimaterieltypeid` = #{dimaterieltypeid}, </if>
+			<if test="num != null">`num` = #{num}, </if>
+			<if test="mdesc != null">`mdesc` = #{mdesc}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="createDeptid != null">`create_deptid` = #{createDeptid}, </if>
+			<if test="createDate != null">`create_date` = #{createDate}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="updateDeptid != null">`update_deptid` = #{updateDeptid}, </if>
+			<if test="updateDate != null">`update_date` = #{updateDate}, </if>
+			<if test="remarks != null">`remarks` = #{remarks}, </if>
+			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
+		</set>
+		where maid = #{maid}
+	</update>
+	
+	<delete id="remove">
+		delete from su_materiel where maid = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from su_materiel where maid in 
+		<foreach item="maid" collection="array" open="(" separator="," close=")">
+			#{maid}
+		</foreach>
+	</delete>
+
+</mapper>

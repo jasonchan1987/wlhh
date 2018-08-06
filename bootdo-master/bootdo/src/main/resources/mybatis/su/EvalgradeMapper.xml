@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.su.dao.EvalgradeDao">
+
+	<select id="get" resultType="com.bootdo.su.domain.EvalgradeDO">
+		select `evgid`,`srid`,`gradedesc`,`dievgradeid`,`create_by`,`create_deptid`,`create_date`,`update_by`,`update_deptid`,`update_date`,`remarks`,`del_flag` from su_evalgrade where evgid = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.su.domain.EvalgradeDO">
+		select `evgid`,`srid`,`gradedesc`,`dievgradeid`,`create_by`,`create_deptid`,`create_date`,`update_by`,`update_deptid`,`update_date`,`remarks`,`del_flag` from su_evalgrade
+        <where>  
+		  		  <if test="evgid != null and evgid != ''"> and evgid = #{evgid} </if>
+		  		  <if test="srid != null and srid != ''"> and srid = #{srid} </if>
+		  		  <if test="gradedesc != null and gradedesc != ''"> and gradedesc = #{gradedesc} </if>
+		  		  <if test="dievgradeid != null and dievgradeid != ''"> and dievgradeid = #{dievgradeid} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="createDeptid != null and createDeptid != ''"> and create_deptid = #{createDeptid} </if>
+		  		  <if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		  <if test="updateDeptid != null and updateDeptid != ''"> and update_deptid = #{updateDeptid} </if>
+		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by evgid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from su_evalgrade
+		 <where>  
+		  		  <if test="evgid != null and evgid != ''"> and evgid = #{evgid} </if>
+		  		  <if test="srid != null and srid != ''"> and srid = #{srid} </if>
+		  		  <if test="gradedesc != null and gradedesc != ''"> and gradedesc = #{gradedesc} </if>
+		  		  <if test="dievgradeid != null and dievgradeid != ''"> and dievgradeid = #{dievgradeid} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="createDeptid != null and createDeptid != ''"> and create_deptid = #{createDeptid} </if>
+		  		  <if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		  <if test="updateDeptid != null and updateDeptid != ''"> and update_deptid = #{updateDeptid} </if>
+		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.su.domain.EvalgradeDO" useGeneratedKeys="true" keyProperty="evgid">
+		insert into su_evalgrade
+		(
+			`srid`, 
+			`gradedesc`, 
+			`dievgradeid`, 
+			`create_by`, 
+			`create_deptid`, 
+			`create_date`, 
+			`update_by`, 
+			`update_deptid`, 
+			`update_date`, 
+			`remarks`, 
+			`del_flag`
+		)
+		values
+		(
+			#{srid}, 
+			#{gradedesc}, 
+			#{dievgradeid}, 
+			#{createBy}, 
+			#{createDeptid}, 
+			#{createDate}, 
+			#{updateBy}, 
+			#{updateDeptid}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{delFlag}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.su.domain.EvalgradeDO">
+		update su_evalgrade 
+		<set>
+			<if test="srid != null">`srid` = #{srid}, </if>
+			<if test="gradedesc != null">`gradedesc` = #{gradedesc}, </if>
+			<if test="dievgradeid != null">`dievgradeid` = #{dievgradeid}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="createDeptid != null">`create_deptid` = #{createDeptid}, </if>
+			<if test="createDate != null">`create_date` = #{createDate}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="updateDeptid != null">`update_deptid` = #{updateDeptid}, </if>
+			<if test="updateDate != null">`update_date` = #{updateDate}, </if>
+			<if test="remarks != null">`remarks` = #{remarks}, </if>
+			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
+		</set>
+		where evgid = #{evgid}
+	</update>
+	
+	<delete id="remove">
+		delete from su_evalgrade where evgid = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from su_evalgrade where evgid in 
+		<foreach item="evgid" collection="array" open="(" separator="," close=")">
+			#{evgid}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.su.dao.EnterqualiDao">
+
+	<select id="get" resultType="com.bootdo.su.domain.EnterqualiDO">
+		select `eqid`,`srid`,`type`,`imgurl`,`sort`,`create_by`,`create_deptid`,`create_date`,`update_by`,`update_deptid`,`update_date`,`remarks`,`del_flag` from su_enterquali where eqid = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.su.domain.EnterqualiDO">
+		select `eqid`,`srid`,`type`,`imgurl`,`sort`,`create_by`,`create_deptid`,`create_date`,`update_by`,`update_deptid`,`update_date`,`remarks`,`del_flag` from su_enterquali
+        <where>  
+		  		  <if test="eqid != null and eqid != ''"> and eqid = #{eqid} </if>
+		  		  <if test="srid != null and srid != ''"> and srid = #{srid} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="imgurl != null and imgurl != ''"> and imgurl = #{imgurl} </if>
+		  		  <if test="sort != null and sort != ''"> and sort = #{sort} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="createDeptid != null and createDeptid != ''"> and create_deptid = #{createDeptid} </if>
+		  		  <if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		  <if test="updateDeptid != null and updateDeptid != ''"> and update_deptid = #{updateDeptid} </if>
+		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by eqid desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from su_enterquali
+		 <where>  
+		  		  <if test="eqid != null and eqid != ''"> and eqid = #{eqid} </if>
+		  		  <if test="srid != null and srid != ''"> and srid = #{srid} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="imgurl != null and imgurl != ''"> and imgurl = #{imgurl} </if>
+		  		  <if test="sort != null and sort != ''"> and sort = #{sort} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="createDeptid != null and createDeptid != ''"> and create_deptid = #{createDeptid} </if>
+		  		  <if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		  <if test="updateDeptid != null and updateDeptid != ''"> and update_deptid = #{updateDeptid} </if>
+		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.su.domain.EnterqualiDO" useGeneratedKeys="true" keyProperty="eqid">
+		insert into su_enterquali
+		(
+			`srid`, 
+			`type`, 
+			`imgurl`, 
+			`sort`, 
+			`create_by`, 
+			`create_deptid`, 
+			`create_date`, 
+			`update_by`, 
+			`update_deptid`, 
+			`update_date`, 
+			`remarks`, 
+			`del_flag`
+		)
+		values
+		(
+			#{srid}, 
+			#{type}, 
+			#{imgurl}, 
+			#{sort}, 
+			#{createBy}, 
+			#{createDeptid}, 
+			#{createDate}, 
+			#{updateBy}, 
+			#{updateDeptid}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{delFlag}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.su.domain.EnterqualiDO">
+		update su_enterquali 
+		<set>
+			<if test="srid != null">`srid` = #{srid}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="imgurl != null">`imgurl` = #{imgurl}, </if>
+			<if test="sort != null">`sort` = #{sort}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="createDeptid != null">`create_deptid` = #{createDeptid}, </if>
+			<if test="createDate != null">`create_date` = #{createDate}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="updateDeptid != null">`update_deptid` = #{updateDeptid}, </if>
+			<if test="updateDate != null">`update_date` = #{updateDate}, </if>
+			<if test="remarks != null">`remarks` = #{remarks}, </if>
+			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
+		</set>
+		where eqid = #{eqid}
+	</update>
+	
+	<delete id="remove">
+		delete from su_enterquali where eqid = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from su_enterquali where eqid in 
+		<foreach item="eqid" collection="array" open="(" separator="," close=")">
+			#{eqid}
+		</foreach>
+	</delete>
+
+</mapper>
